@@ -12,7 +12,6 @@ class RenterList extends React.Component {
       <div className="RenterList">
         <button type="button" className="btn btn-primary" onClick={this.addRenterEvt.bind(this)}>Sign up</button>
         {renterElements}
-        
       </div>
     );
   }

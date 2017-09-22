@@ -21,6 +21,7 @@ import React from 'react';
 import { createStore, combineReducers } from 'redux'
 
 import RenterList from './components/RenterList/RenterList'
+import Web3 from 'web3'
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
