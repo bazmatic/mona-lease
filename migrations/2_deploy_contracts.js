@@ -1,8 +1,9 @@
-var ConvertLib = artifacts.require("./ConvertLib.sol");
-var MetaCoin = artifacts.require("./MetaCoin.sol");
+var MonaLease = artifacts.require("./MonaLease.sol");
 
-module.exports = function(deployer) {
-  deployer.deploy(ConvertLib);
-  deployer.link(ConvertLib, MetaCoin);
-  deployer.deploy(MetaCoin);
+
+module.exports = async function(deployer) {
+  await deployer.deploy(MonaLease, "Mona", 300, 300, "0x0");
+  console.log("***", MonaLease.address);
+  var Events = require("../src/events.js");
+  Events.watch(MonaLease.address);
 };
