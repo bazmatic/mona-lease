@@ -178,7 +178,7 @@ contract MonaLease is usingOraclize {
             else {
                 delay = 120; //2 mins //86400; //1 day
             }
-            oraclize_query(delay, "URL", "json(https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=eth&secondaryCurrencyCode=aud).DayAvgPrice");
+            //oraclize_query(delay, "URL", "json(https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=eth&secondaryCurrencyCode=aud).DayAvgPrice");
         //}
     }
     
