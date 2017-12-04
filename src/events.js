@@ -8,7 +8,7 @@ exports.watch = function(address) {
 	var MyContract = web3.eth.contract(abi);
 	var myContractInstance = MyContract.at(address);
 	var watcher = myContractInstance.allEvents({fromBlock: 0, toBlock: 'latest'});
-	console.log("Watching for events...");
+
 	watcher.watch(function(err, data){
 		if (err) {
 			console.error(err);

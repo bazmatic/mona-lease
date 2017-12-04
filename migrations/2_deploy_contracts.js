@@ -1,9 +1,13 @@
 var MonaLease = artifacts.require("./MonaLease.sol");
-
+var SHOW_EVENTS = false;
 
 module.exports = async function(deployer) {
-  await deployer.deploy(MonaLease, "Mona", 300, 300, "0x0");
-  console.log("***", MonaLease.address);
-  var Events = require("../src/events.js");
-  Events.watch(MonaLease.address);
+  await deployer.deploy(MonaLease, "Mona", 1, 1, "0x0");
+  console.log("Watching deployed contract at", MonaLease.address)
+
+  if (SHOW_EVENTS) {
+  	var Events = require("../src/events.js");
+  	Events.watch(MonaLease.address);
+  }
+
 };
