@@ -7,7 +7,7 @@ module.exports = async function(deployer) {
 
   if (SHOW_EVENTS) {
   	var Events = require("../src/events.js");
-  	Events.watch(MonaLease.address);
+  	Events.watch(MonaLease.address, MonaLease.abi);
   }
 
 };
