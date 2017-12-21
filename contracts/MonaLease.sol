@@ -156,7 +156,7 @@ contract MonaLease {
         fiatAsWei = (weiPerEther / lastEthPriceAsFiat) * fiatValue;
     }
 
-    function giveExchangeRateAdvice(uint256 exchangeRate) public onlyOracle {
+    function giveExchangeRateAdvice(uint256 exchangeRate) public {
         newLogEntry("Received Oracle advice");
         lastEthPriceAsFiat = exchangeRate;
         lastWeiPerFiat = weiPerEther / lastEthPriceAsFiat;

@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
+    "node-cron": "^1.2.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "^1.0.13",
     "redux": "^3.7.2",
     "run": "^1.4.0",
-    "truffle-hdwallet-provider": "git://github.com/trufflesuite/truffle-hdwallet-provider.git#3d2d49563f8bbab60617b6a297c98f43c3069eac",
+    "truffle-contract": "^3.0.1",
+    "truffle-hdwallet-provider": "latest",
     "web3": "^0.19.0"
   },
   "scripts": {
