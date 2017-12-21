@@ -11,13 +11,11 @@ var rates =  {
 var cron = require('node-cron');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
 
-var MyContract = truffleContract({
+var MonaLeaseContract = truffleContract({
   abi: monaLeaseContractBuild.abi,
-  unlinked_binary: monaLeaseContractBuild.deployedByteCode,
-  address: monaLeaseContractBuild.address // optional
-  // many more
 })
-MyContract.setProvider(provider);
+MonaLeaseContract.setProvider(web3.currentProvider);
+var monaLeaseInstance = MonaLeaseContract.at(monaLeaseContractBuild.address);
 
 function updateRate () {
   request ({
@@ -26,20 +24,18 @@ function updateRate () {
     }, function (err, response, body) {
         if(response.statusCode === 200) {
           rates.AUD = body.DayAvgPrice;
-          console.log("To day's average price of Eth in AUD is ", rates.AUD);
+          console.log("Today's average price of Eth in AUD is ", rates.AUD);
         }
     });
 }
 updateRate();
-
-var deployed;
-MyContract.deployed().then(function(instance) {
-  var deployed = instance;
-  return instance.giveExchangeRateAdvice(rates.AUD);
-}).then(function(transactionsID) {
-  console.log("This is the transactionsID for the function giveExchangeRateAdvice: " + transactionsID);
-});
-
 cron.schedule('* * * * *', updateRate);
+function sendExchangeRate(rate){
+  monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), {from: web3.eth.accounts[0]}).then(function(transactionsID) {
+    console.log("This is the transactionsID for the function giveExchangeRateAdvice: " + transactionsID.toString());
+  });
+}
+var testRate = 12345;
+sendExchangeRate(testRate);
 
 exports.rates = rates;

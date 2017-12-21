@@ -6,7 +6,7 @@ module.exports = async function(deployer) {
   console.log("Watching deployed contract at", MonaLease.address)
 	var monaLeaseInfo = {
 		abi: MonaLease.abi,
+    address: MonaLease.address
 	};
-  console.log(MonaLease.abi)
   fs.writeFileSync("../build/MonaLeaseDeployment.json", JSON.stringify(monaLeaseInfo));
 };
