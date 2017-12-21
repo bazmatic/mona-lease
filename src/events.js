@@ -1,7 +1,7 @@
 //var abi = require('../build/contracts/MonaLease.json').abi;
 var address=process.argv[2];
 var Web3 = require("web3");
-web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
 
 exports.watch = function(address, abi) {
@@ -22,10 +22,10 @@ exports.watch = function(address, abi) {
 				else {
 					console.log(data.event, data.args);
 				}
-			} 
-			
+			}
+
 		}
-	});	
+	});
 }
 
 exports.sendContractTransaction = function(contract, obj) {
@@ -46,5 +46,3 @@ exports.sendContractTransaction = function(contract, obj) {
 		})
 	})
 }
-
-

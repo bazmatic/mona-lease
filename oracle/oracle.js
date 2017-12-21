@@ -9,16 +9,15 @@ var rates =  {
 };
 
 var cron = require('node-cron');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
 
 var MyContract = truffleContract({
-  abi: monaLeaseContractBuild.abi ,
+  abi: monaLeaseContractBuild.abi,
   unlinked_binary: monaLeaseContractBuild.deployedByteCode,
   address: monaLeaseContractBuild.address // optional
   // many more
 })
 MyContract.setProvider(provider);
-
 
 function updateRate () {
   request ({
@@ -32,10 +31,15 @@ function updateRate () {
     });
 }
 updateRate();
+
+var deployed;
+MyContract.deployed().then(function(instance) {
+  var deployed = instance;
+  return instance.giveExchangeRateAdvice(rates.AUD);
+}).then(function(transactionsID) {
+  console.log("This is the transactionsID for the function giveExchangeRateAdvice: " + transactionsID);
+});
+
 cron.schedule('* * * * *', updateRate);
-
-function sendRateAdvice() {
-
-}
 
 exports.rates = rates;
