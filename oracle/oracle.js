@@ -9,7 +9,7 @@ var rates =  {
 };
 
 var cron = require('node-cron');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
+var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
 
 var MonaLeaseContract = truffleContract({
   abi: monaLeaseContractBuild.abi,
