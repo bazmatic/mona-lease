@@ -8,10 +8,10 @@ import Web3 from 'web3';
 import contract from 'truffle-contract'
 
 // Import our contract artifacts and turn them into usable abstractions.
-import monaLeaseArtifact from '../../build/contracts/MonaLease.json'
+//import monaLeaseArtifact from '../../build/contracts/MonaLease.json'
 
 // MetaCoin is our usable abstraction, which we'll use through the code below.
-var MonaLeaseContract = contract(monaLeaseArtifact);
+//var MonaLeaseContract = contract(monaLeaseArtifact);
 
 
 function renderApp() {

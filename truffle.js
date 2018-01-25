@@ -6,7 +6,7 @@ var mnemonic = "oil snack powder kiwi exhibit clay rate table famous behind fina
 exports.networks = {
 		development: {
 			host: "127.0.0.1",
-			port: 7545,
+			port: 8545,
 			network_id: "*" // Match any network id
 		}
 	}
@@ -16,7 +16,7 @@ exports.networks = {
 	networks: {
 		development: {
 			host: "127.0.0.1",
-			port: 7545,
+			port: 8545,
 			network_id: "*" // Match any network id
 		}
 	}

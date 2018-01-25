@@ -1,10 +1,10 @@
 var http = require('http');
-const oracle = require('./oracle.js');
+var oracle = require('./oracle.js');
 
 function onUserRequest(request, response) {
   console.log("User's address is: " + request.url);
   response.writeHead(200, {"Context-Type": "Text-Type"});
-  response.write(oracle.rates.AUD.toString());
+  response.write("Today's average price of Eth in AUD is " + oracle.ExchangeRate().AUD.toString());
   response.end();
 }
 

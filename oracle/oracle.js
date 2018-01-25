@@ -1,15 +1,16 @@
-var request = require('request');
+var fetch = require('node-fetch');
 var Web3 = require('web3');
-var url = 'https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=eth&secondaryCurrencyCode=aud';
 var monaLeaseContractBuild = require('../build/MonaLeaseDeployment.json');
 var truffleContract = require('truffle-contract');
-
+var ExchangeMarketURL = {
+  IndependentReserve: 'https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=eth&secondaryCurrencyCode=aud',
+  BtcMarkets: 'https://api.btcmarkets.net/market/BTC/AUD/tick'
+};
 var rates =  {
   AUD: 0
 };
-
 var cron = require('node-cron');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:7545'));
+var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
 
 var MonaLeaseContract = truffleContract({
   abi: monaLeaseContractBuild.abi,
@@ -17,25 +18,39 @@ var MonaLeaseContract = truffleContract({
 MonaLeaseContract.setProvider(web3.currentProvider);
 var monaLeaseInstance = MonaLeaseContract.at(monaLeaseContractBuild.address);
 
-function updateRate () {
-  request ({
-    url: url,
-    json: true
-    }, function (err, response, body) {
-        if(response.statusCode === 200) {
-          rates.AUD = body.DayAvgPrice;
-          console.log("Today's average price of Eth in AUD is ", rates.AUD);
-        }
-    });
+async function MarketExchange(url) {
+  try {
+    const response = await fetch(url);
+    const json = await response.json();
+    return (json.LastPrice || (json.lastPrice)/10);
+  } catch (error) {
+    console.log(error);
+  }
 }
-updateRate();
-cron.schedule('* * * * *', updateRate);
-function sendExchangeRate(rate){
-  monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), {from: web3.eth.accounts[0]}).then(function(transactionsID) {
-    console.log("This is the transactionsID for the function giveExchangeRateAdvice: " + transactionsID.toString());
+//buggy way of finding average -> need to change it
+const ObtainRate = () => {
+  Object.values(ExchangeMarketURL).map(function(url, index) {
+    (MarketExchange(url)).then(function (rate) {
+      rates.AUD += rate;
+      rates.AUD /= index+1;
+    });
   });
 }
-var testRate = 12345;
-sendExchangeRate(testRate);
+cron.schedule('* * * * *', function () {
+  ObtainRate();
+});
+ObtainRate();
 
-exports.rates = rates;
+module.exports = {
+  ExchangeRate: function () {
+    return rates;
+  },
+  SetExchangeRate: function (rate) {
+    monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), 
+    {from: web3.eth.accounts[0]}).then((TransactionsResult)=> {
+      console.log(TransactionsResult);
+    }, (error)=> {
+      console.log("error: ", error);
+    })
+  } 
+}

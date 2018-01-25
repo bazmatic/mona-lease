@@ -30,7 +30,7 @@ exports.watch = function(address, abi) {
 
 exports.sendContractTransaction = function(contract, obj) {
 	return new Promise(function(resolve, reject) {
-		console.log(obj);
+		//console.log(obj);
 		let contractTransaction = contract.sendTransaction(obj);
 		contract.allEvents({fromBlock: 0, toBlock: 'latest'}).watch(function(err, data) {
 			if (err) {
@@ -39,7 +39,7 @@ exports.sendContractTransaction = function(contract, obj) {
 			else {
 				//console.log(data);
 				if (data && data.type == 'mined' && data.transactionHash) {
-					console.log("Mined");
+					//console.log("Mined");
 					resolve(data);
 				}
 			}

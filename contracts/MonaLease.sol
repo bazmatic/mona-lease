@@ -33,7 +33,7 @@ contract MonaLease {
     event rentPaid(address renterAddress);
     event rentDefault(address renterAddress);
     event paymentAccepted(address renterAddress);
-
+    event paymentDeclined(address renterAddress);
     event newLogEntry(string _description);
 
     //Note that the rental amount is in AUD cents, eg 100 AU dollars would be 10000.
@@ -44,9 +44,12 @@ contract MonaLease {
         rentalFiatAmount = _rentalFiatAmount;
         oracle = _oracle;
     }
-
+    
     //Add a new renter
     function signLease(string _name, string _email) public {
+        if(renterExists(msg.sender)) {
+            revert();
+        }
         Renter memory _renter = Renter({
             addr: msg.sender,
             name: _name,
@@ -63,23 +66,28 @@ contract MonaLease {
         newLogEntry("Signed lease");
     }
 
-    function isContractOwner(address _address) internal constant returns (bool)  {
-        return ( _address == contractOwner);
-    }
 
     modifier onlyContractOwner() {
-        if (!isContractOwner(msg.sender)) {
+        if (msg.sender != contractOwner) {
             revert();
         }
         _;
     }
 
+    modifier onlyRenters() {
+        if (!renterExists(msg.sender)) {
+            revert();
+        }
+        _;
+    }
+    
     modifier onlyOracle() {
         if (msg.sender != oracle) {
             revert();
         }
         _;
     }
+
 
     function getRenter(address _renterAddress) internal constant returns (Renter) {
         return renters[_renterAddress];
@@ -95,14 +103,13 @@ contract MonaLease {
     }
 
     //If renter is registered, deposit into balance
-    function _depositForRenter(address _renterAddress, uint256 amount) internal {
-        //newLogEntry("Accepted admin payment");
-        paymentAccepted(_renterAddress);
+    function _depositForRenter(address _renterAddress, uint256 amount) onlyRenters internal {
         if (amount > 0 && renterExists(_renterAddress)) {
             renters[_renterAddress].weiHeld += msg.value;
+             paymentAccepted(_renterAddress);
         }
         else {
-            newLogEntry("Accepted admin payment");
+            paymentDeclined(_renterAddress);
         }
     }
 
@@ -121,7 +128,7 @@ contract MonaLease {
     }
 
     //Return amount due as AUD and ETH
-    function getAmountDue(address _renterAddress) public constant returns (uint256) {
+    function getAmountDue(address _renterAddress)  public constant returns (uint256) {
         Renter memory renter = getRenter(_renterAddress);
         uint timeElapsed = now - renter.lastPaymentDate;
         uint intervalsElapsed = timeElapsed / rentalInterval;
@@ -130,23 +137,24 @@ contract MonaLease {
 
     //If (and only if) rent is due, send it to the owner's account.
     function takeRent(address _renterAddress) internal returns (bool) {
-        Renter memory renter = getRenter(_renterAddress);
+       // Renter memory renter = getRenter(_renterAddress);
         uint256 dueFiat = getAmountDue(_renterAddress);
         uint256 dueWei = fiatToWei(dueFiat);
-        if (dueWei > 0 && dueWei > renter.weiHeld) {
-            renter.owesWei = dueWei;
-            renter.inDefault = true;
-            rentDefault(renter.addr);
+        if (dueWei > 0 && dueWei > renters[_renterAddress].weiHeld) {
+            renters[_renterAddress].owesWei = dueWei;
+            renters[_renterAddress].inDefault = true;
+            rentDefault(_renterAddress);
             return false;
         }
         else {
-            renter.weiHeld -= dueWei;
-            renter.inDefault = false;
-            renter.lastPaymentDate = now;
-            renter.owesWei = 0;
+            renters[_renterAddress].weiHeld -= dueWei;
+            renters[_renterAddress].inDefault = false;
+            renters[_renterAddress].lastPaymentDate = now;
+            renters[_renterAddress].owesWei = 0;
             if (dueWei > 0) {
                 contractOwner.transfer(dueWei);
-                rentPaid(renter.addr); 
+                rentPaid(_renterAddress);
+                newLogEntry("sent");
             }
             return true;
         }
@@ -156,7 +164,7 @@ contract MonaLease {
         fiatAsWei = (weiPerEther / lastEthPriceAsFiat) * fiatValue;
     }
 
-    function giveExchangeRateAdvice(uint256 exchangeRate) public {
+    function giveExchangeRateAdvice(uint256 exchangeRate) onlyOracle public {
         newLogEntry("Received Oracle advice");
         lastEthPriceAsFiat = exchangeRate;
         lastWeiPerFiat = weiPerEther / lastEthPriceAsFiat;
