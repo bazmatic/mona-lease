@@ -1,9 +1,10 @@
 var MonaLease = artifacts.require("./MonaLease.sol");
 var fs = require('fs');
+var Web3 = require('web3');
 
 
 module.exports = async function(deployer) {
-  await deployer.deploy(MonaLease, "Code Cave", 1, 100, "0xc9ed4b6be028099c565b13afd007a5ac22e3b6b5", {gas: 6721975});
+  await deployer.deploy(MonaLease, "Code Cave", 1, 100, web3.eth.accounts[0], {gas: 6721975});
   console.log("Watching deployed contract at", MonaLease.address)
 	var monaLeaseInfo = {
 		abi: MonaLease.abi,

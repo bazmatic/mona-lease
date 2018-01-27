@@ -11,11 +11,14 @@ var BigNumber = require("big-number");
 //-----Global Variables-----//
 var renterCount = 5;
 const lastEthPriceAsFiat = 47500;
+var renterName = "Renter ";
+var renterEmail = "renter."
+
 //-----MonaLease Tests-----//
 contract('MonaLease', async function(accounts) {
-	describe('Renters Signing Lease', async()=> {
+	describe('SignLease', async()=> {
 
-		it("signs renters into the lease", async ()=> {
+		it("should sign up 5 accounts into the lease as renters", async ()=> {
 			var instance = await MonaLease.deployed();
 			for (var i=1; i<=renterCount; i++) {
 				let renterName = "Renter " + i;
@@ -25,7 +28,7 @@ contract('MonaLease', async function(accounts) {
 			}
 		});
 
-		it("throws error when existing renters try to sign lease", async ()=> {
+		it("should throw error when existing accounts sign the lease again", async ()=> {
 			var instance = await MonaLease.deployed();
 			for (var i=1; i<=renterCount; i++) {
 				let renterName = "Existing Renter " + i;
@@ -34,9 +37,8 @@ contract('MonaLease', async function(accounts) {
 			}
 		});
 	});
-	//better describe names
-	describe("Get Renter Details",  function() {
-		it("get details of signed renters", async function() {
+	describe("Renters",  function() {
+		it("should return details of renters", async function() {
 			var instance = await MonaLease.deployed();
 			let AccIndex = 0, NameIndex = 1, EmailIndex = 2;
 			for (var i=1; i<=renterCount; i++) {
@@ -49,7 +51,7 @@ contract('MonaLease', async function(accounts) {
 			}
 		});
 
-		it("get falsy renter details values for non signed renters",async ()=> {
+		it("should return falsy values for accounts that are not renters",async ()=> {
 			let instance = await MonaLease.deployed();
 			let AccIndex = 0, NameIndex = 1, EmailIndex = 2;
 			let nonRenterAcc = accounts[8];
@@ -60,7 +62,7 @@ contract('MonaLease', async function(accounts) {
 			
 		});
 
-		it("get address details of signed renters", async ()=> {
+		it("should return address of renters", async ()=> {
 			let instance = await MonaLease.deployed();
 			let renterIndex = 0;
 			for(var i=1; i<=renterCount; i++, renterIndex++) {
@@ -70,15 +72,15 @@ contract('MonaLease', async function(accounts) {
 
 		});
 
-		it("throws error when renter index doesn't exist", async ()=> {
+		it("should throw error for accounts that are not renters", async ()=> {
 			let instance = await MonaLease.deployed();
 			let nonRenterIndex = 6;
 			return expect(instance.renterList.call(nonRenterIndex)).to.be.rejectedWith(Error);
 		})
 	});
 
-	describe("Deposit/Send Wei to Contract", function () {
-		it("renter3 deposits 10 wei more into escrow", async function() {
+	describe("Deposit", function () {
+		it("should deposit 10 wei into renter 3's escrow", async function() {
 			let instance = await MonaLease.deployed();
 			let renter3Acc = accounts[2];
 			let weiHeldIndex = 3;
@@ -91,7 +93,7 @@ contract('MonaLease', async function(accounts) {
 			
 		});
 
-		it("renter 3 sends 10 wei to contract", async function () {
+		it("should send 10 wei into contract from renter 3", async function () {
 			let instance = await MonaLease.deployed();
 			let renterDetails = await instance.renters.call(accounts[2]);
 			let weiHeldBalance = renterDetails[3];
@@ -101,13 +103,13 @@ contract('MonaLease', async function(accounts) {
 			assert(sendTransaction.logs[0].event == "paymentAccepted");
 		});
 
-		it("throws error when non renter sends wei to contract", async function () {
+		it("should throws error when non renter sends wei to contract", async function () {
 			let instance = await MonaLease.deployed();
 			let nonRenter = accounts[6];
 			return expect(instance.sendTransaction({from: nonRenter, value: web3.toWei(1, "ether")})).to.be.rejectedWith(Error);
 		});
 
-		it("renter 3 can't deposit 0 wei into escrow", async ()=> {
+		it("should throw error when renter sends 0 wei into escrow", async ()=> {
 			let instance = await MonaLease.deployed();
 			let renter3Acc = accounts[2];
 			let zeroWei = 0;
@@ -115,7 +117,7 @@ contract('MonaLease', async function(accounts) {
 			assert(depositDetail.logs[0].event == "paymentDeclined");
 		});
 
-		it("throws error when non renter deposits wei", async ()=> {
+		it("should throw error when non renter deposits wei", async ()=> {
 			let instance = await MonaLease.deployed();
 			let nonRenter = accounts[6];
 			let weiAmount = 100000;
@@ -123,8 +125,8 @@ contract('MonaLease', async function(accounts) {
 		});
 	});
 
-	describe('Rent Amount Due', function() {
-		it("get rent amount due for renter 3", async function() {
+	describe('Amount Due', function() {
+		it("should return rent amount due for renter 3", async function() {
 			var instance = await MonaLease.deployed();
 			let renter = await instance.renters.call(accounts[2]);
 			let amountDue = await instance.getAmountDue.call(accounts[2], {from:accounts[2]});
@@ -133,7 +135,7 @@ contract('MonaLease', async function(accounts) {
 	});
 
 	describe("Oracle Transaction", function () {
-		it("sends exchange rate to contract", async ()=> {
+		it("should sends exchange rate to contract", async ()=> {
 			var instance = await MonaLease.deployed();
 			let ExchRate = 1200;
 			const oracleAcc = accounts[0];
@@ -143,15 +145,15 @@ contract('MonaLease', async function(accounts) {
 			let currentEthPrice = await instance.lastEthPriceAsFiat.call();
 			assert(ExchRate == currentEthPrice, "Exchange rate is the current Eth Price in the contract");
 		});
-		it("throws error when account isn't oracle Account", async ()=> {
+		it("should throw error when account sending oracle isn't the set oracle account", async ()=> {
 			var instance = await MonaLease.deployed();
 			let nonOracleAcc = accounts[1];
 			return expect(instance.giveExchangeRateAdvice(1200, {from: nonOracleAcc})).to.be.rejectedWith(Error);
 		});
 	});
 
-	describe("Run Rent Payment", function () {
-		it("first four retners deposit 1 eth to weiHeld", async ()=> {
+	describe("Run rent", function () {
+		before("first four renters deposit 1 eth to weiHeld", async ()=> {
 			var instance = await MonaLease.deployed(); 
 			let fourRenter = 4;
 			for(let i=1; i<=fourRenter; i++) {
@@ -159,7 +161,7 @@ contract('MonaLease', async function(accounts) {
 			}
 		}); 
 
-		it("first four renters sent rental amount", async ()=> {
+		it("should pay rent for the first four accounts", async ()=> {
 			var instance = await MonaLease.deployed();
 			let fourRenter = 4;
 			let rentalPayment = await instance.run();
@@ -170,7 +172,7 @@ contract('MonaLease', async function(accounts) {
 			}
 		});
 
-		it("fifth renter declined payment", async ()=> {
+		it("should decline payment for the fifth renter", async ()=> {
 			var instance = await MonaLease.deployed();
 			let fifthRenterDetail = await instance.renters.call([accounts[5]]);
 			assert(fifthRenterDetail[7] , true);
