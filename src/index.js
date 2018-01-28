@@ -6,6 +6,8 @@ import App from './App';
 
 import Web3 from 'web3';
 import contract from 'truffle-contract'
+import Main from "./Main";
+
 
 // Import our contract artifacts and turn them into usable abstractions.
 //import monaLeaseArtifact from '../../build/contracts/MonaLease.json'
@@ -14,17 +16,9 @@ import contract from 'truffle-contract'
 //var MonaLeaseContract = contract(monaLeaseArtifact);
 
 
-function renderApp() {
-	ReactDOM.render(
-	  <App subscriber={onStoreChange} />,
-	  document.getElementById('root')
-	);	
-}
-
-function onStoreChange() {
-	renderApp(this);
-}
-renderApp(onStoreChange);
-
+ReactDOM.render(
+	<Main/>, 
+	document.getElementById("root")
+  );
 
 
