@@ -11,8 +11,6 @@ var BigNumber = require("big-number");
 //-----Global Variables-----//
 var renterCount = 5;
 const lastEthPriceAsFiat = 47500;
-var renterName = "Renter ";
-var renterEmail = "renter."
 
 //-----MonaLease Tests-----//
 contract('MonaLease', async function(accounts) {
@@ -153,7 +151,7 @@ contract('MonaLease', async function(accounts) {
 	});
 
 	describe("Run rent", function () {
-		before("first four renters deposit 1 eth to weiHeld", async ()=> {
+		it("first four renters deposit 1 eth to weiHeld", async ()=> {
 			var instance = await MonaLease.deployed(); 
 			let fourRenter = 4;
 			for(let i=1; i<=fourRenter; i++) {

@@ -13,7 +13,7 @@ var cron = require('node-cron');
 var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545'));
 
 var MonaLeaseContract = truffleContract({
-  abi: monaLeaseContractBuild.abi,
+  abi: monaLeaseContractBuild.abi
 })
 MonaLeaseContract.setProvider(web3.currentProvider);
 var monaLeaseInstance = MonaLeaseContract.at(monaLeaseContractBuild.address);
@@ -45,7 +45,7 @@ module.exports = {
   ExchangeRate: function () {
     return rates;
   },
-  SetExchangeRate: function (rate) {
+  SetExchangeRate: async function (rate) {
     monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), 
     {from: web3.eth.accounts[0]}).then((TransactionsResult)=> {
       console.log(TransactionsResult);
