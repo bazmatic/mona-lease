@@ -6,7 +6,6 @@ import { Link, Redirect,withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 function Nav ({dispatch, history}) {
-  console.log(history);
   return (
   <div>
     <nav className="navbar navbar-light bg-faded">

@@ -7,7 +7,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const TextFieldExampleSimple = ({dispatch, history}) => {
     let name, amount, interval, address;
-    console.log(history)
 
     return (
         
@@ -29,7 +28,6 @@ const TextFieldExampleSimple = ({dispatch, history}) => {
     /><br />
    <RaisedButton label="Create Contract" style={{marginLeft: '525px', marginTop: '12px'}} 
    onClick={e => {
-     console.log(history)
     dispatch(Contractaddres(name.getValue(), interval.getValue(), amount.getValue(), address.getValue()));
     name.getInputNode().value = '';
     address.getInputNode().value = '';

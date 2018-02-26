@@ -10,12 +10,12 @@ class Landlord extends Component {
     render() {
         return (
             <div>
-                {this.props.contract ?
-                
-                
-                    <h1> Tester</h1>
-                
-                : <SignContract/>}
+                {this.props.contract[0] ? 
+                <div>  <LandLordView/> </div>
+               
+                : <div> <SignContract/> </div>
+            
+                }
             </div>
         )
     }
@@ -28,4 +28,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect () (Landlord))
+export default withRouter(connect (mapStateToProps) (Landlord))

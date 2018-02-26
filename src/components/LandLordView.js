@@ -34,7 +34,7 @@ class Landlord extends React.Component {
     render() {
         return(
             <div>
-               <div style={{ }}> 
+               <div > 
                 {this.createAddress()}
                 </div>
                 <div> 
