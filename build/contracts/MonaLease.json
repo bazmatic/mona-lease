@@ -6888,8 +6888,13 @@
       "events": {},
       "links": {},
       "address": "0x4bd60cca24a22952f3865523cc7487594571ad2b"
+    },
+    "1519878303332": {
+      "events": {},
+      "links": {},
+      "address": "0x3fed9faf5e5ad422871152fbe04c3020742fe932"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-02-16T16:34:27.478Z"
+  "updatedAt": "2018-03-01T06:07:33.028Z"
 }

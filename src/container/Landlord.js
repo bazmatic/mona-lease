@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import SignContract from '../components/Contract';
+import {Contract} from '../components/Contract';
 import LandLordView from '../container/LandLordView'
 class Landlord extends Component {
     render() {
@@ -10,7 +10,7 @@ class Landlord extends Component {
                 {this.props.contract[0] ? 
                 <div>  <LandLordView/> </div>
                
-                : <div> <SignContract/> </div>
+                : <div> <Contract/> </div>
             
                 }
             </div>

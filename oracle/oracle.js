@@ -1,11 +1,10 @@
 var fetch = require('node-fetch');
 var Web3 = require('web3');
-var Contract = require('../src/components/Contract');
+var {Contractdetails} = require('../src/actions/contract')
 var monaLeaseContractBuild = require('../build/MonaLeaseDeployment.json');
 var truffleContract = require('truffle-contract');
 var ExchangeMarketURL = {
   IndependentReserve: 'https://api.independentreserve.com/Public/GetMarketSummary?primaryCurrencyCode=eth&secondaryCurrencyCode=aud',
-  BtcMarkets: 'https://api.btcmarkets.net/market/BTC/AUD/tick'
 };
 var rates =  {
   AUD: 0
@@ -23,19 +22,16 @@ async function MarketExchange(url) {
   try {
     const response = await fetch(url);
     const json = await response.json();
-    return (json.LastPrice || (json.lastPrice)/10);
+    return (json.LastPrice);
   } catch (error) {
     console.log(error);
   }
 }
 //buggy way of finding average -> need to change it
 const ObtainRate = () => {
-  Object.values(ExchangeMarketURL).map(function(url, index) {
-    (MarketExchange(url)).then(function (rate) {
+    (MarketExchange(ExchangeMarketURL.IndependentReserve)).then(function (rate) {
       rates.AUD += rate;
-      rates.AUD /= index+1;
     });
-  });
 }
 cron.schedule('* * * * *', function () {
   ObtainRate();

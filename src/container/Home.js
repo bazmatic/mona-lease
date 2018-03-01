@@ -5,13 +5,14 @@ import propertyManagement from '../img/propertymanagement.png';
 import { withRouter } from 'react-router-dom';
 import LandlordButton from '../components/LandlordButton'
 import RenterButtons from '../components/RenterButton'
+import {OracleId} from '../components/Contract'
 
+console.log(OracleId);
 let PropertyIcon = () => (
   <div style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50%'}}>
       <img style={{margin: '10px'}}src={propertyManagement} width="100" height="200" className="d-inline-block align-top" alt=""/>
   </div>
 )
-
 let Monalease = () => (
   <div style={{margin: '60px', alignContent: 'center'}}className="container-fluid"> 
            <h1 style={{textAlign: 'center'}}className="h2">Monalease</h1>
