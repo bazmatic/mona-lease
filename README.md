@@ -51,11 +51,20 @@ $ truffle test
 
 ## Live Instance
 
-**TODO** a "live" instance is currently being deployed   
-the notes about that will be put here once that has been done
 
-#### Code Cave Maleny 
+#### [http://45.79.83.93:8080/](http://45.79.83.93:8080/). (TODO: add link to specific lease contract !)
 
-**TODO** add link to the code cave Maleny live demo (running on Ropsten initially ..?)
+The live instance is hosted on *45.79.83.93* (in */projects/mona-lease*).
+
+Pushing to the `live-instance-codecave` branch results in a redeploy.   
+**Note that it will take a while to complete because it does a full 'npm install' and build every time.**
+
+This is implemented by setting up the Webhook (under Settings (only repo owner can do this)) to call an action on the server (http://45.79.83.93:4552/).  
+
+So there are two **pm2** processes running on the server, one for the webhook, and one that is the webserver, these are both in the `/deploy` folder, and are created by running :
+
+```
+# ./deploy/run-once-create-pm2.sh 
+```
 
 

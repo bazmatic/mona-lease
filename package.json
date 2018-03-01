@@ -16,6 +16,7 @@
     "material-ui": "^0.20.0",
     "node-cron": "^1.2.1",
     "node-fetch": "^2.0.0",
+    "node-static": "^0.7.10",
     "react": "^15.6.2",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table": "^4.3.1",
