@@ -17,18 +17,8 @@ git pull origin $1
 npm install
 npm run build
 
-cd build
-
 
 # --- now stop and restart the local webserver --- 
 
-CMD="serve -p 4552"
-
-# a little logic here to kill the currently running instance :
-nohup $CMD > my.log 2>&1 &
-echo $! > save_pid.txt
-rm my.log
-
-# and now to start it up again
-nohup $CMD &
+pm2 restart all # TODO - intelligently figure out which process to restart and only do that one
 
