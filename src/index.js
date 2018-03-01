@@ -13,14 +13,16 @@ import Renter from './container/Renter'
 import NavBar from './components/Nav'
 import Footer from './components/Footer'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import LandlordSignUp from './container/Landlord'
+import LandlordSignUp from './container/Landlord';
+import {loadState, saveState} from './localStorage';
 
 
 const middleware = applyMiddleware(ReduxThunk);
-let store = createStore(monaLease, middleware);
+var persistedState = loadState();
+let store = createStore(monaLease, persistedState, middleware);
 
 store.subscribe(()=> {
-    console.log("STORE HAS CHANGED", store.getState())
+    saveState(store.getState());
 })
 
 ReactDOM.render(
