@@ -1,9 +1,10 @@
-# Mona Lease
 
-A dApp for self-executing rental agreements paid in Ethereum.
 
 
 ![](icon.png)
+
+**A dApp for self-executing rental agreements paid in Ethereum.**
+
 
 
 Used by Co-working spaces.  
