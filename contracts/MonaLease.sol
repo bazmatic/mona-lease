@@ -14,6 +14,13 @@ contract MonaLease {
         bool _assigned;
     }
 
+    struct Payment {
+        uint256 datePaid;
+        address fromAddr;
+        uint256 weiPaid;
+        uint256 fiatPaid;
+    }
+
     uint256 constant weiPerEther = 1000000000000000000;
 
     address contractOwner;
@@ -28,6 +35,9 @@ contract MonaLease {
     mapping  (address => Renter) public renters;
     address[] public renterList;
     address[] rentersInDefault;
+
+    Payment[] public paymentList;
+
     address oracle;
 
     event rentPaid(address renterAddress);
@@ -140,6 +150,7 @@ contract MonaLease {
        // Renter memory renter = getRenter(_renterAddress);
         uint256 dueFiat = getAmountDue(_renterAddress);
         uint256 dueWei = fiatToWei(dueFiat);
+
         if (dueWei > 0 && dueWei > renters[_renterAddress].weiHeld) {
             renters[_renterAddress].owesWei = dueWei;
             renters[_renterAddress].inDefault = true;
@@ -154,6 +165,13 @@ contract MonaLease {
             if (dueWei > 0) {
                 contractOwner.transfer(dueWei);
                 rentPaid(_renterAddress);
+                paymentList.push(Payment({
+                    datePaid: now,
+                    weiPaid: dueWei,
+                    fiatPaid: dueFiat,
+                    fromAddr: _renterAddress
+                }));
+
                 newLogEntry("sent");
             }
             return true;

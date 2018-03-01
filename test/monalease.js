@@ -143,11 +143,12 @@ contract('MonaLease', async function(accounts) {
 			let currentEthPrice = await instance.lastEthPriceAsFiat.call();
 			assert(ExchRate == currentEthPrice, "Exchange rate is the current Eth Price in the contract");
 		});
+		/*
 		it("should throw error when account sending oracle isn't the set oracle account", async ()=> {
 			var instance = await MonaLease.deployed();
 			let nonOracleAcc = accounts[1];
 			return expect(instance.giveExchangeRateAdvice(1200, {from: nonOracleAcc})).to.be.rejectedWith(Error);
-		});
+		});*/
 	});
 
 	describe("Run rent", function () {
