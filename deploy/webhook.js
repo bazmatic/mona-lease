@@ -182,8 +182,7 @@ const script_to_run   = '/projects/mona-lease/deploy/live-deploy.sh'
 
 function process_push(data) {
 
-    
-    const ref_match = branch_prefix.branch_to_watch
+    const ref_match = `${branch_prefix}${branch_to_watch}`
 
     console.log(data, ' ---- ', data.ref, ' ---- ', ref_match)
     
