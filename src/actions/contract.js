@@ -1,4 +1,4 @@
-import abi from '../build/MonaLease.json'
+//import abi from '../build/MonaLease.json'
 import Web3 from 'web3'
 import swal from 'sweetalert';
 import { Link } from 'react-router-dom'
@@ -62,7 +62,8 @@ export  function Contractaddres (name, interval, amount, address) {
                       text: "Goto See Renters"
 
                     },
-                  })
+                  });
+                  
                   
                  
               }
