@@ -184,7 +184,8 @@ function process_push(data) {
 
     const ref_match = `${branch_prefix}${branch_to_watch}`
 
-    console.log(data, ' ---- ', data.ref, ' ---- ', ref_match)
+    //console.log(data)
+    console.log(' ---- ', data.ref, ' ---- ', ref_match)
     
     if ( data.ref != ref_match ) {
         console.log(`Not the ${branch_to_watch}, so skipping`)
