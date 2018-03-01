@@ -51,20 +51,20 @@ $ truffle test
 
 ## Live Instance
 
+
+#### [http://45.79.83.93:8080/](http://45.79.83.93:8080/)
+
 The live instance is hosted on *45.79.83.93* (in */projects/mona-lease*).
 
 Pushing to the `live-instance-codecave` branch results in a redeploy.  
 
-This is implemented by setting up the Webhook (under Settings (only repo owner can do this)) to call an action on the server.  
+This is implemented by setting up the Webhook (under Settings (only repo owner can do this)) to call an action on the server (http://45.79.83.93:4552/).  
 
-So there are 2 **pm2** processes running on the server, one for the webhook, and one that is the webserver, these are both in the `/deploy` folder, and are created by running :
+So there are two **pm2** processes running on the server, one for the webhook, and one that is the webserver, these are both in the `/deploy` folder, and are created by running :
 
 ```
 # ./deploy/run-once-create-pm2.sh 
 ```
-
-**WIP ...**
-
 
 #### Code Cave Maleny 
 
