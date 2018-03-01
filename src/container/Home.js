@@ -5,6 +5,7 @@ import propertyManagement from '../img/propertymanagement.png';
 import { withRouter } from 'react-router-dom';
 import LandlordButton from '../components/LandlordButton'
 import RenterButtons from '../components/RenterButton'
+
 let PropertyIcon = () => (
   <div style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '50%'}}>
       <img style={{margin: '10px'}}src={propertyManagement} width="100" height="200" className="d-inline-block align-top" alt=""/>
