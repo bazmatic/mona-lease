@@ -182,18 +182,18 @@ const script_to_run   = '/projects/mona-lease/deploy/live-deploy.sh'
 
 function process_push(data) {
 
-    
-    const ref_match = branch_prefix.branch_to_watch
+    const ref_match = `${branch_prefix}${branch_to_watch}`
 
-    console.log(data, ' ---- ', data.ref, ' ---- ', ref_match)
+    //console.log(data)
+    console.log(' ---- ', data.ref, ' ---- ', ref_match)
     
     if ( data.ref != ref_match ) {
         console.log(`Not the ${branch_to_watch}, so skipping`)
     } else {
         const cmd = `${script_to_run} ${branch_to_watch}`
-        child_process.exec('ls -lah /tmp', function(error, stdout, stderr) {
+        child_process.exec(cmd, function(error, stdout, stderr) {
             console.log('-------------------------------------------')
-            console.log(`Running script (${scmd})`)
+            console.log(`Running script (${cmd})`)
             console.log('Error:', error)
             console.log('Stdout:', stdout)
             console.log('Stderr:', stderr)
