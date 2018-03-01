@@ -1,10 +1,8 @@
 import React from 'react';
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
-import Update from "./ButtonUpdate";
-import RentPayment from './RentPayment'
-import BigNumber from 'big-number'
+import Update from "../components/ButtonUpdate";
+
 class Landlord extends React.Component {
     createAddress () {
         return this.props.renters.map((renter) => {
@@ -36,12 +34,10 @@ class Landlord extends React.Component {
             <div>
                <div > 
                 {this.createAddress()}
-                </div>
-                <div> 
-                    <Update/>
-                </div>
+                </div> 
+                    
                 <div>
-
+                <Update/>
                 </div>
             </div>
             

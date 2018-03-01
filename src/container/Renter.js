@@ -1,19 +1,14 @@
 import React from 'react';
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.css';
-import Update from "./UpdateButton";
-import RentPayment from './RentPayment'
-import BigNumber from 'big-number'
-import abi from '../build/MonaLease.json'
+import GetRenters from "../components/GetRentersButton";
 import Web3 from 'web3'
 import SendWei from '../components/SendWei'
 class Landlord extends React.Component {
     createAddress () {
         var web3 = window.web3;
         var account = web3.eth.accounts[0];
-        var renter;
-        return this.props.renters.filter(renters => renters.addr == account).map((renter) => {
+        return this.props.renters.filter(renters => renters.addr === account).map((renter) => {
             return (
                 <div key={renter.addr} className="card" style={{textAlign: 'center', width: "23rem", display: 'inline-block', margin: '10px'}}>
                 
@@ -50,7 +45,7 @@ class Landlord extends React.Component {
                 {this.createAddress()}
                 </div>
                 <div> 
-                <Update contract={this.props.contract[0].contractAddress}/>
+                <GetRenters contract={this.props.contract[0].contractAddress}/>
                 </div>
                 <SendWei contract={this.props.contract[0].contractAddress}/>
                 <div>

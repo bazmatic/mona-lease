@@ -1,5 +1,6 @@
 var fetch = require('node-fetch');
 var Web3 = require('web3');
+var Contract = require('../src/components/Contract');
 var monaLeaseContractBuild = require('../build/MonaLeaseDeployment.json');
 var truffleContract = require('truffle-contract');
 var ExchangeMarketURL = {
@@ -47,7 +48,7 @@ module.exports = {
   },
   SetExchangeRate: async function (rate) {
     monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), 
-    {from: web3.eth.accounts[0]}).then((TransactionsResult)=> {
+    {from: Contract.OracleID}).then((TransactionsResult)=> {
       console.log(TransactionsResult);
     }, (error)=> {
       console.log("error: ", error);

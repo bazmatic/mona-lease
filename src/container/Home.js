@@ -1,10 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import Contract from './Contract'
-import icon from '../img/Mona.png'
 import 'bootstrap/dist/css/bootstrap.css';
 import propertyManagement from '../img/propertymanagement.png';
-import { Link, Redirect,withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import LandlordButton from '../components/LandlordButton'
 import RenterButtons from '../components/RenterButton'
 let PropertyIcon = () => (

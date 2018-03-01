@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import SignUp from './SignUp'
+import SignUp from '../components/SignUp'
 class UpdateButton extends Component {
     render() {
         return (

@@ -4,9 +4,9 @@ import { Contractaddres } from "../actions/contract";
 import { withRouter } from 'react-router-dom'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+var name, amount, interval, address;
 
 const TextFieldExampleSimple = ({dispatch, history}) => {
-    let name, amount, interval, address;
 
     return (
         
@@ -41,5 +41,4 @@ const TextFieldExampleSimple = ({dispatch, history}) => {
 }
 
 const Contract = withRouter(connect()(TextFieldExampleSimple))
-
 export default Contract;
