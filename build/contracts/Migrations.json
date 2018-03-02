@@ -816,77 +816,12 @@
     "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
   },
   "networks": {
-    "5777": {
+    "1519986902957": {
       "events": {},
       "links": {},
-      "address": "0x8cdaf0cd259887258bc13a92c0a6da92698644c0"
-    },
-    "1513645324665": {
-      "events": {},
-      "links": {},
-      "address": "0x41c851a906f96fa52b0a0879d89fc3f95cb2d030"
-    },
-    "1513828064022": {
-      "events": {},
-      "links": {},
-      "address": "0x0b38aec3a889e261e1d6a8f2e1220607467ec18d"
-    },
-    "1513841820577": {
-      "events": {},
-      "links": {},
-      "address": "0xe31bce7a760e06375116aa59aac39e5baac3bae0"
-    },
-    "1513858016553": {
-      "events": {},
-      "links": {},
-      "address": "0xd63259b15e88dfdc994a90104a2c7226ce3eca69"
-    },
-    "1516614964703": {
-      "events": {},
-      "links": {},
-      "address": "0xe7adfb57c75a1d62149a913d8131b823b2cd0721"
-    },
-    "1516754778719": {
-      "events": {},
-      "links": {},
-      "address": "0x4bc950adca16e689f2affee2781b6bc49e751e58"
-    },
-    "1516755962424": {
-      "events": {},
-      "links": {},
-      "address": "0x9f7cf55b28177efbdde9855b073b0cc9eb0694ce"
-    },
-    "1516769692367": {
-      "events": {},
-      "links": {},
-      "address": "0x5e8e17a14f691ef054600e9564507cf75a417eb3"
-    },
-    "1516834504444": {
-      "events": {},
-      "links": {},
-      "address": "0xdd670e3bc4fea1ba9c819fdb667aa549e8471ebd"
-    },
-    "1517302297328": {
-      "events": {},
-      "links": {},
-      "address": "0x1706c0a16e3dde117f30122cecdef1aff9625eef"
-    },
-    "1518522332816": {
-      "events": {},
-      "links": {},
-      "address": "0x5efa04f4c624b643be33acd2d5d7364216cbd81d"
-    },
-    "1518794666163": {
-      "events": {},
-      "links": {},
-      "address": "0x2fe8c58d2177e4c7049ca55dca52416da50b25c1"
-    },
-    "1519878303332": {
-      "events": {},
-      "links": {},
-      "address": "0x43f9f0829117c4cacd8c59bd7033aa8c85060fa5"
+      "address": "0x4bc7c3aeeddccf1099338a110a8836c0c8ed6b9a"
     }
   },
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-01T06:07:33.022Z"
+  "updatedAt": "2018-03-02T10:35:22.144Z"
 }

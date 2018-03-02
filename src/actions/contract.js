@@ -1,8 +1,7 @@
 var Web3 = require('web3');
 var build = require('../build/MonaLease.json');
 var swal = require('sweetalert');
-
-var OracleAddress = null, ContractAddress = null;
+var axios = require('axios'); 
 
 export function createContract  (name, interval, amount, address, landloardAddress) {
   return {
@@ -49,13 +48,18 @@ export  function Contractaddres (name, interval, amount, address) {
         }
 
         if (res) {
-            console.log(res);
+         
             var tx = res.transactionHash;
             web3.eth.getTransactionReceipt(tx, function(error, result){
               if(!error) {
-                  OracleAddress = address;
-                  ContractAddress = result.contractAddress;
                   dispatch(sendAddress(result.contractAddress));
+                  axios({
+                    method: 'post',
+                    url: 'http://localhost:8888/lease',
+                    data: {
+                      address: result.contractAddress,
+                    }
+                  });
                   swal({
                     title: "New Contract has been created",
                     text: "The new Contract Address is "+ result.contractAddress,
@@ -78,7 +82,3 @@ export  function Contractaddres (name, interval, amount, address) {
   }
 }
 
-export const Contractdetails = {
-  OracleID: '0xb873294ed22b3505f4c4434c2d60258141e6bd22',
-  ContractAddress: '0x5aebb1928a499dd7ab1a59401844b4e1be57e0c9'
-}

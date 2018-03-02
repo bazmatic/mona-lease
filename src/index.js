@@ -19,7 +19,7 @@ import {loadState, saveState} from './localStorage';
 
 const middleware = applyMiddleware(ReduxThunk);
 var persistedState = loadState();
-let store = createStore(monaLease, persistedState, middleware);
+let store = createStore(monaLease, middleware);
 
 store.subscribe(()=> {
     saveState(store.getState());

@@ -6,9 +6,11 @@
     "axios": "^0.17.1",
     "big-number": "^0.4.0",
     "bignumber.js": "^5.0.0",
+    "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0-alpha.6",
     "chai": "^2.1.2",
     "chai-as-promised": "^7.1.1",
+    "cookie-parser": "^1.4.3",
     "fetch": "^1.1.0",
     "history": "^1.17.0",
     "material-ui": "^0.20.0",
@@ -17,6 +19,7 @@
     "node-static": "^0.7.10",
     "react": "^15.6.2",
     "react-bootstrap": "^0.32.1",
+    "react-bootstrap-table": "^4.3.1",
     "react-dom": "^15.6.2",
     "react-redux": "^5.0.7",
     "react-router": "^1.0.3",
@@ -28,15 +31,15 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.5.3",
     "redux-thunk": "^2.2.0",
-    "remixd": "^0.1.2",
+    "remixd": "^0.1.5",
     "run": "^1.4.0",
     "semantic-ui-react": "^0.78.2",
     "solc": "^0.4.19",
     "sweetalert": "^2.1.0",
-    "truffle": "^4.0.4",
+    "truffle": "^4.1.0",
     "truffle-contract": "^3.0.3",
     "truffle-hdwallet-provider": "latest",
-    "web3": "^0.19.1"
+    "web3": "^0.20.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -45,5 +48,4 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
-
 }
