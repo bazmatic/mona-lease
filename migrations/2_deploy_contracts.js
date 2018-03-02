@@ -10,5 +10,5 @@ module.exports = async function(deployer) {
 		abi: MonaLease.abi,
     address: MonaLease.address
 	};
-fs.writeFileSync("C:/Users/norta/Documents/Internship/mona-lease/build/MonaLeaseDeployment.json", JSON.stringify(monaLeaseInfo));
+fs.writeFileSync("../build/MonaLeaseDeployment.json", JSON.stringify(monaLeaseInfo));
 };
