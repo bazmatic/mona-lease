@@ -26,6 +26,11 @@ oracleServer.use(cookieParser());
 oracleServer.get('/', function(req, res) {
 	res.status(200).send("MonaLease Oracle");
 });
+oracleServer.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 oracleServer.get('/rate/:code', function(req, res) {
   res.status(200).json(
@@ -57,7 +62,9 @@ http.createServer(oracleServer).listen(8888, function(err) {
 	}
 });
 
-/*
-var DAY = 1000 * 60 * 60 * 24;
-setInterval(function doStuff() {}, DAY)
-*/
+
+var DAY = 2;
+async function sendRate () {
+  oracle.SetExchangeRate(oracle.ExchangeRate)
+}
+setInterval(function () {sendRate()}, 1000);
