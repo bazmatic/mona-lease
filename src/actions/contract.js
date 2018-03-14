@@ -1,8 +1,7 @@
-//import abi from '../build/MonaLease.json'
-import Web3 from 'web3'
-import swal from 'sweetalert';
-import { Link } from 'react-router-dom'
-import build from '../build/MonaLease.json'
+var Web3 = require('web3');
+var build = require('../build/MonaLease.json');
+var swal = require('sweetalert');
+var axios = require('axios'); 
 
 export function createContract  (name, interval, amount, address, landloardAddress) {
   return {
@@ -19,16 +18,16 @@ export function createContract  (name, interval, amount, address, landloardAddre
 
 export function sendAddress (contractAddress) {
   return {
-  type: 'created', 
-  contractAddress
+    type: 'created', 
+    contractAddress
   }
 
 }
 
 export function addy (landloardAddress) {
   return {
-  type: 'address', 
-  landloardAddress
+    type: 'address', 
+    landloardAddress
   }
 }
 
@@ -49,11 +48,18 @@ export  function Contractaddres (name, interval, amount, address) {
         }
 
         if (res) {
-            console.log(res);
+         
             var tx = res.transactionHash;
             web3.eth.getTransactionReceipt(tx, function(error, result){
               if(!error) {
                   dispatch(sendAddress(result.contractAddress));
+                  axios({
+                    method: 'post',
+                    url: 'http://localhost:8888/lease',
+                    data: {
+                      address: result.contractAddress,
+                    }
+                  });
                   swal({
                     title: "New Contract has been created",
                     text: "The new Contract Address is "+ result.contractAddress,
@@ -76,3 +82,4 @@ export  function Contractaddres (name, interval, amount, address) {
     })
   }
 }
+

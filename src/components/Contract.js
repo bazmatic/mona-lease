@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 var name, amount, interval, address;
 
-const TextFieldExampleSimple = ({dispatch, history}) => {
+const SignUpForm = ({dispatch, history}) => {
 
     return (
         
@@ -39,6 +39,5 @@ const TextFieldExampleSimple = ({dispatch, history}) => {
   </div>
     )
 }
-
-const Contract = withRouter(connect()(TextFieldExampleSimple))
-export default Contract;
+export const Contract = withRouter(connect()(SignUpForm));
+export const OracleId = "0xb873294ed22b3505f4c4434c2d60258141e6bd22";

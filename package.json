@@ -39,7 +39,7 @@
     "truffle": "^4.1.0",
     "truffle-contract": "^3.0.3",
     "truffle-hdwallet-provider": "latest",
-    "web3": "^0.19.1"
+    "web3": "^0.20.0"
   },
   "scripts": {
     "start": "react-scripts start",

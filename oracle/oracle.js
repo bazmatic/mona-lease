@@ -1,5 +1,6 @@
 var fetch = require('node-fetch');
 var Web3 = require('web3');
+var Contract = require('./data.json');
 var monaLeaseContractBuild = require('../build/MonaLeaseDeployment.json');
 var truffleContract = require('truffle-contract');
 var ExchangeMarketURL = {
@@ -15,6 +16,7 @@ var web3 = new Web3(new Web3.providers.HttpProvider('http://127.0.0.1:8545')); /
 var MonaLeaseContract = truffleContract({
   abi: monaLeaseContractBuild.abi
 })
+
 MonaLeaseContract.setProvider(web3.currentProvider);
 var monaLeaseInstance = MonaLeaseContract.at(monaLeaseContractBuild.address);
 
@@ -36,26 +38,26 @@ const ObtainRate = () => {
   Object.values(ExchangeMarketURL).map(function(url, index) {
     (MarketExchange(url)).then(function (rate) {
       rates.AUD += rate;
-      rates.AUD /= index+1;
     });
   });*/
 }
-/*
-cron.schedule('* * * * *', function () {
-  ObtainRate();
-});
-ObtainRate();*/
+
+async function sendRate () {
+  SetExchangeRate(1000);
+}
+setInterval(function () {sendRate()}, 1000);
+
+async function SetExchangeRate (rate) {
+  monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), 
+  {from: Contract.OracleID}).then((TransactionsResult)=> {
+    console.log(TransactionsResult);
+  }, (error)=> {
+    console.log("error: ", error);
+  })
+} 
 
 module.exports = {
   ExchangeRate: function () {
     return rates;
-  },
-  SetExchangeRate: async function (rate) {
-    monaLeaseInstance.giveExchangeRateAdvice(Math.round(rate * 100), 
-    {from: Contract.OracleID}).then((TransactionsResult)=> {
-      console.log(TransactionsResult);
-    }, (error)=> {
-      console.log("error: ", error);
-    })
-  } 
+  }
 }

@@ -19,7 +19,7 @@ import {loadState, saveState} from './localStorage';
 
 const middleware = applyMiddleware(ReduxThunk);
 var persistedState = loadState();
-let store = createStore(monaLease, persistedState, middleware);
+let store = createStore(monaLease, middleware);
 
 store.subscribe(()=> {
     saveState(store.getState());
@@ -37,7 +37,7 @@ ReactDOM.render(
         <Route exact={true} path="/" component={Home}/>
         <Route path="/LandLordView" component={LandLordView}/>
         <Route path="/RenterSignUp" component={SignUp}/>
-        <Route path="/Renter" component={Renter}/>
+        <Route path="/Renter/" component={Renter}/>
         <Route path="/Contract" component={LandlordSignUp}/>
         <div>
         <Footer/>
