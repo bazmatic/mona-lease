@@ -15,7 +15,8 @@ export function Contract (state = [], action) {
                         name: action.name,
                         interval: action.interval,
                         rentAmount: action.amount,
-                        oracleAddress: action.address
+                        oracleAddress: action.address,
+                        renterCounter: 0
                     }
                 ]
 
@@ -25,6 +26,12 @@ export function Contract (state = [], action) {
                     contractAddress: action.contractAddress,
                     creating: !contract.creating,
                     created: !contract.created
+                }))
+
+                case 'newRenter':
+                return state.map(contract => ({
+                    ...contract,
+                    renterCounter: action.renterCounter
                 }))
 
                 default:

@@ -1,7 +1,7 @@
 import abi from '../build/MonaLease.json'
 import Web3 from 'web3'
 var truffleContract = require('truffle-contract');
-let renterCount = 3;
+var renterCounter = 1;
 
 export function runPayment (ContractAddress) {
     return dispatch => {
@@ -24,15 +24,15 @@ export function runPayment (ContractAddress) {
               })
     }
 }
-
+export function renterCounter (counter) {
+    renterCounter += counter;
+}
 export function updateAllRenters(Contractaddres) {
     return dispatch => {
-        for(let i=0; i < renterCount; i++) {
+        for(let i=0; i < renterCounter; i++) {
             dispatch(getAddress(Contractaddres, i));
         }
-        //window.location.replace('http://localhost:3000/LandLordView')
     }
-      
 }
 export function updateRenter (key, addr, name, email, weiHeld, leaseStartDate, lastPaymentDate, owesWei, inDefault, _assigned) {
     return {

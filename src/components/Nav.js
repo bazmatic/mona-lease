@@ -9,7 +9,7 @@ function Nav ({dispatch, history}) {
   <div>
     <nav className="navbar navbar-light bg-faded">
     
-      <img style={{margin: '10px'}}src={icon} width="50" height="50" className="d-inline-block align-top" alt=""
+      <img style={{}}src={icon} width="50" height="50" className="d-inline-block align-top" alt=""
       onClick={e =>{ history.push('/')}}/>
     
   </nav>

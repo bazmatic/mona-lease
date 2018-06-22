@@ -1,8 +1,7 @@
 var Web3 = require('web3');
 var build = require('../build/MonaLease.json');
 var swal = require('sweetalert');
-var axios = require('axios'); 
-
+var withRouter = require('react-router-dom');
 export function createContract  (name, interval, amount, address, landloardAddress) {
   return {
     type: 'initiate',
@@ -10,7 +9,7 @@ export function createContract  (name, interval, amount, address, landloardAddre
     interval, 
     amount,
     address,
-    landloardAddress
+    landloardAddress,
   }
     
   }
@@ -48,34 +47,17 @@ export  function Contractaddres (name, interval, amount, address) {
         }
 
         if (res) {
-         
             var tx = res.transactionHash;
             web3.eth.getTransactionReceipt(tx, function(error, result){
               if(!error) {
                   dispatch(sendAddress(result.contractAddress));
-                  axios({
-                    method: 'post',
-                    url: 'http://localhost:8888/lease',
-                    data: {
-                      address: result.contractAddress,
-                    }
-                  });
                   swal({
-                    title: "New Contract has been created",
-                    text: "The new Contract Address is "+ result.contractAddress,
+                    title: "Congratulations",
+                    text: "Your contract Address: " + result.contractAddress,
                     icon: "success",
-                    button: {
-                      text: "Goto See Renters"
-
-                    },
-                  });
-                  
-                  
-                 
+                    timer: 2000,
+                  })
               }
-                
-              else
-                  console.error(error);
           })
 
         }

@@ -63,8 +63,3 @@ http.createServer(oracleServer).listen(8888, function(err) {
 });
 
 
-var DAY = 2;
-async function sendRate () {
-  oracle.SetExchangeRate(oracle.ExchangeRate)
-}
-setInterval(function () {sendRate()}, 1000);

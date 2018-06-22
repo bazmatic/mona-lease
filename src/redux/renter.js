@@ -23,5 +23,5 @@ function renter (state = [], action) {
       }
 }
 
-  
-  export default renter
+ 
+export default renter

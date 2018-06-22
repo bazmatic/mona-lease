@@ -35,8 +35,7 @@ contract MonaLease {
     mapping  (address => Renter) public renters;
     address[] public renterList;
     address[] rentersInDefault;
-
-    Payment[] public paymentList;
+    mapping (address => Payment) public payments;
 
     address oracle;
 
@@ -116,7 +115,7 @@ contract MonaLease {
     function _depositForRenter(address _renterAddress, uint256 amount) onlyRenters internal {
         if (amount > 0 && renterExists(_renterAddress)) {
             renters[_renterAddress].weiHeld += msg.value;
-             paymentAccepted(_renterAddress);
+            paymentAccepted(_renterAddress);
         }
         else {
             paymentDeclined(_renterAddress);
@@ -165,13 +164,13 @@ contract MonaLease {
             if (dueWei > 0) {
                 contractOwner.transfer(dueWei);
                 rentPaid(_renterAddress);
-                paymentList.push(Payment({
+                Payment memory _payment = Payment({
                     datePaid: now,
                     weiPaid: dueWei,
                     fiatPaid: dueFiat,
                     fromAddr: _renterAddress
-                }));
-
+                });
+                payments[_renterAddress] = _payment;
                 newLogEntry("sent");
             }
             return true;

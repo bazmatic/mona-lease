@@ -7,7 +7,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 var name, amount, interval, address;
 
 const SignUpForm = ({dispatch, history}) => {
-
     return (
         
     <div style={{margin:'150px'}}>
@@ -40,4 +39,3 @@ const SignUpForm = ({dispatch, history}) => {
     )
 }
 export const Contract = withRouter(connect()(SignUpForm));
-export const OracleId = "0xb873294ed22b3505f4c4434c2d60258141e6bd22";

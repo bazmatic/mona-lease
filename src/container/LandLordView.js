@@ -15,10 +15,9 @@ class Landlord extends React.Component {
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">Name: <span><em>{renter.name}</em></span></li>
                         <li className="list-group-item">Email: <span><em>{renter.email}</em></span></li>
-                        <li className="list-group-item">Current Balance: <span><em>{(renter.weiHeld).toNumber()}</em></span></li>
-                        <li className="list-group-item">Start Date: <span><em>{Date(renter.leaseStartDate.toNumber()).toString().slice(0,24)}</em></span></li>
-                        <li className="list-group-item">Last Payment: <span><em>{Date(renter.leaseStartDate.toNumber()).toString().slice(0,24)}</em></span></li>
-                        <li className="list-group-item">Owing Balance: <span><em>{(renter.owesWei).toNumber()}</em></span></li>
+                        <li className="list-group-item">Current Balance: <span><em>{parseInt(renter.weiHeld)}</em></span></li>
+                        <li className="list-group-item">Start Date: <span><em>{Date(parseInt(renter.leaseStartDate)).toString().slice(0,24)}</em></span></li>
+                        <li className="list-group-item">Owing Balance: <span><em>{parseInt(renter.owesWei)}</em></span></li>
                         <li className="list-group-item">Payment Defaults: <span><em>{renter.inDefault.toString()}</em></span></li>
 
                     </ul>
@@ -33,7 +32,7 @@ class Landlord extends React.Component {
         return(
             <div>
                <div > 
-                {this.createAddress()}
+                { this.createAddress()}
                 </div> 
                     
                 <div>
