@@ -6,6 +6,7 @@ import Web3 from 'web3'
 
 class UpdateButton extends Component {
     contractInterval () {
+        
         var web3 = window.web3;
         var account = web3.eth.accounts[0];
         var contract_address = this.props.match.params.id;

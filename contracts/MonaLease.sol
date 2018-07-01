@@ -24,9 +24,9 @@ contract MonaLease {
     uint256 constant weiPerEther = 1000000000000000000;
 
     address contractOwner;
-    string description;
-    uint256 rentalInterval;
-    uint256 rentalFiatAmount;
+    string public description;
+    uint256 public rentalInterval;
+    uint256 public rentalFiatAmount;
 
     uint256 public lastEthPriceAsFiat = 47500; //Default value
     uint256 public lastWeiPerFiat;
@@ -35,7 +35,7 @@ contract MonaLease {
     mapping  (address => Renter) public renters;
     address[] public renterList;
     address[] rentersInDefault;
-    mapping (address => Payment) public payments;
+    mapping (address  => Payment []) public payments;
 
     address oracle;
 
@@ -46,7 +46,7 @@ contract MonaLease {
     event newLogEntry(string _description);
 
     //Note that the rental amount is in AUD cents, eg 100 AU dollars would be 10000.
-    function MonaLease(string _description, uint256 _rentalInterval, uint256 _rentalFiatAmount, address _oracle) public {
+    constructor (string _description, uint256 _rentalInterval, uint256 _rentalFiatAmount, address _oracle) public {
         contractOwner = msg.sender;
         description = _description;
         rentalInterval = _rentalInterval;
@@ -72,7 +72,7 @@ contract MonaLease {
         });
         renters[_renter.addr] = _renter;
         renterList.push(_renter.addr);
-        newLogEntry("Signed lease");
+        emit newLogEntry("Signed lease");
     }
 
 
@@ -96,7 +96,10 @@ contract MonaLease {
         }
         _;
     }
-
+    
+    function getNumberPayments (address _renterAddress) public constant returns (uint256) {
+        return payments[_renterAddress].length;
+    }
 
     function getRenter(address _renterAddress) internal constant returns (Renter) {
         return renters[_renterAddress];
@@ -115,10 +118,10 @@ contract MonaLease {
     function _depositForRenter(address _renterAddress, uint256 amount) onlyRenters internal {
         if (amount > 0 && renterExists(_renterAddress)) {
             renters[_renterAddress].weiHeld += msg.value;
-            paymentAccepted(_renterAddress);
+            emit paymentAccepted(_renterAddress);
         }
         else {
-            paymentDeclined(_renterAddress);
+            emit paymentDeclined(_renterAddress);
         }
     }
 
@@ -129,7 +132,7 @@ contract MonaLease {
 
     //See if any rent is due, and if so, pay it.
     function run() public {
-        newLogEntry("Run()");
+        emit newLogEntry("Run()");
         //For each renter, getAmountDue and pay it
         for(uint i = 0; i < renterList.length; i++) {
             takeRent(renterList[i]);
@@ -153,7 +156,7 @@ contract MonaLease {
         if (dueWei > 0 && dueWei > renters[_renterAddress].weiHeld) {
             renters[_renterAddress].owesWei = dueWei;
             renters[_renterAddress].inDefault = true;
-            rentDefault(_renterAddress);
+            emit rentDefault(_renterAddress);
             return false;
         }
         else {
@@ -163,26 +166,26 @@ contract MonaLease {
             renters[_renterAddress].owesWei = 0;
             if (dueWei > 0) {
                 contractOwner.transfer(dueWei);
-                rentPaid(_renterAddress);
+                emit rentPaid(_renterAddress);
                 Payment memory _payment = Payment({
                     datePaid: now,
                     weiPaid: dueWei,
                     fiatPaid: dueFiat,
                     fromAddr: _renterAddress
                 });
-                payments[_renterAddress] = _payment;
-                newLogEntry("sent");
+                payments[_renterAddress].push(_payment);
+                emit newLogEntry("sent");
             }
             return true;
         }
     }
-
+    
     function fiatToWei(uint256 fiatValue) public constant returns (uint256 fiatAsWei) {
         fiatAsWei = (weiPerEther / lastEthPriceAsFiat) * fiatValue;
     }
 
     function giveExchangeRateAdvice(uint256 exchangeRate) onlyOracle public {
-        newLogEntry("Received Oracle advice");
+        emit newLogEntry("Received Oracle advice");
         lastEthPriceAsFiat = exchangeRate;
         lastWeiPerFiat = weiPerEther / lastEthPriceAsFiat;
         run(); //Do a rent run

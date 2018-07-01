@@ -1,4 +1,4 @@
-function payment (state = [{fromAdrr: "0x5a600702721c64fc7a6bddd513c8342ad47128b6",nextRun:12}], action) {
+function payment (state = [], action) {
     switch (action.type) {
         case 'newPayment':
           return [
