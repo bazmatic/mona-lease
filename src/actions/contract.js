@@ -2,6 +2,8 @@ var Web3 = require('web3');
 var build = require('../build/MonaLease.json');
 var swal = require('sweetalert');
 var withRouter = require('react-router-dom');
+var axios = require('axios');
+
 export function createContract  (name, interval, amount, address, landloardAddress) {
   return {
     type: 'initiate',
@@ -63,7 +65,7 @@ export function Contractaddres (name, interval, amount, address) {
         var Abi = build.abi;
         var monacontract = web3.eth.contract(Abi);
         dispatch(createContract(name, interval, amount, address, account));
-        return monacontract.new(name.toString(), interval, amount, account, {
+        return monacontract.new(name.toString(), interval, amount, address, {
           from: account,
           data: build.bytecode,
           gas: 4000000
@@ -79,6 +81,28 @@ export function Contractaddres (name, interval, amount, address) {
                     icon: "success",
                     timer: 2000,
                   })
+
+                  axios.post('http://localhost:8888/ContractCreated', {
+                    contractAddress: result.contractAddress, 
+                    landlordAddress: account,
+                    oracleAddress: address,
+                    timeCreated: 1,
+                    rentInterval: interval
+                  })
+                  .catch(function (error) {
+                    console.log(error.response.data);
+                  });
+
+                  axios.post('http://localhost:8888/Rent', {
+                    contractAddress: result.contractAddress, 
+                    landlordAddress: account,
+                    oracleAddress: address,
+                    timeCreated: 1,
+                    rentInterval: interval
+                  })
+                  .catch(function (error) {
+                    console.log(error.response.data);
+                  });
               }
           })
 

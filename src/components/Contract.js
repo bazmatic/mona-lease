@@ -4,6 +4,7 @@ import { Contractaddres } from "../actions/contract";
 import { withRouter } from 'react-router-dom'
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+
 var name, amount, interval, address;
 
 const SignUpForm = ({dispatch, history}) => {
